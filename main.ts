@@ -35,19 +35,19 @@ namespace OLED {
         command(SSD1306_SETHIGHCOLUMN)
         command(SSD1306_SETLOWCOLUMN)
         for (let pagenumber = 0; pagenumber < 8; pagenumber++) {
-            command(SSD1306_SETPAGEADRESS + pagenumber)   //176 is 0xB0, pageaddress command
+            command(SSD1306_SETPAGEADRESS + pagenumber)
 
             //write 16 chunks of 0x40 and then 8 bytes of 0x00
-            for (let counter = 0; counter < 16; counter++) {
-                let data = pins.createBuffer(9);
-                data[0] = 0x40; // Data Mode
-                for (let i = 1; i < 9; i++) {
-                    data[i] = 0x00
-                }
-                for (let i = 0; i < 9; i++) {
-                    pins.i2cWriteBuffer(chipAdress, data, false)
-                }
+            // for (let counter = 0; counter < 16; counter++) {            // exit should be counter < 16
+            let data = pins.createBuffer(9);
+            data[0] = 0x40; // Data Mode
+            for (let i = 1; i < 9; i++) {
+                data[i] = 0x00
             }
+            for (let i = 0; i < 16; i++) {
+                pins.i2cWriteBuffer(chipAdress, data, false)
+            }
+            // }
         }
         command(SSD1306_DISPLAYON)
     }
