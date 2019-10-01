@@ -51,6 +51,7 @@ namespace OLED {
         }
         command(SSD1306_DISPLAYON)
     }
+    
     export function init() {
         command(SSD1306_DISPLAYOFF);
         command(SSD1306_SETDISPLAYCLOCKDIV);
