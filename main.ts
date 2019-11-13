@@ -22,6 +22,12 @@ namespace OLED {
     const SSD1306_SEGREMAP = 0xA0
     const SSD1306_CHARGEPUMP = 0x8D
     const chipAdress = 0x3C
+    const xOffset = 0
+    const yOffset = 0
+    let charX = 0
+    let charY = 0
+    let displayWidth = 128
+    let displayHeight = 64/8
 
     function command(cmd: number) {
         let buf = pins.createBuffer(2)
@@ -51,7 +57,50 @@ namespace OLED {
         }
         command(SSD1306_DISPLAYON)
     }
+
+export function writeString(str: string) {
+    for (let i = 0; i < str.length();i++) {
+        if (charX > (displayWidth -6) {
+            newLine()
+        }
+        drawChar(charX, charY, str.charAt(i))
+        charX += 6
+    }
+}
+
+export function newLine() {
+    charY++
+    charX = xOffset
+}
+
+function drawChar(x: number, y: number, c: string) {
+    let highBit: number
+    let lowBit: number
+    highBit = x & 0xF0
+    lowBit = x & 0x0F
+
+    command(SSD1306_SETSTARTLINE)
+    command((0x10 | highBit)) // send Columnaddress 4 higher bits
+    command(lowBit)           // send Columnaddress 4 lower bits
+    command(SSD1306_SETPAGEADRESS + y)  // send Pageadress
     
+    let line = pins.createBuffer(2)
+    line[0] = 0x40
+    for (let i = 0; i<6; i++) {
+        if (i===5){
+            line[1]=0x00
+        }
+        else {
+            let charIndex = c.charCodeAt(0)
+            let charNumber = font.getNumber(NumberFormat.UInt8BE, 5*charIndex +i)
+            line[1] = charNumber
+        }
+        pins.i2cWriteBuffer(chipAdress, line, false)
+    }
+}
+
+
+
     export function init() {
         command(SSD1306_DISPLAYOFF);
         command(SSD1306_SETDISPLAYCLOCKDIV);
