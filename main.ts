@@ -19,15 +19,15 @@ namespace OLED {
     const SSD1306_SETSTARTLINE = 0x40
     const SSD1306_COMSCANINC = 0xC0
     const SSD1306_COMSCANDEC = 0xC8
-    const SSD1306_SEGREMAP = 0xA0
+    const SSD1306_SEGREMAP = 0xA1
     const SSD1306_CHARGEPUMP = 0x8D
     const chipAdress = 0x3C
-    const xOffset = 0
+    const xOffset = 2
     const yOffset = 0
     let charX = 0
     let charY = 0
     let displayWidth = 128
-    let displayHeight = 64/8
+    let displayHeight = 64 / 8
 
     function command(cmd: number) {
         let buf = pins.createBuffer(2)
@@ -56,6 +56,9 @@ namespace OLED {
             // }
         }
         command(SSD1306_DISPLAYON)
+
+        charX = xOffset
+        charY = yOffset
     }
 
     export function writeString(str: string) {
@@ -74,32 +77,33 @@ namespace OLED {
     }
 
     function drawChar(x: number, y: number, c: string) {
+        //serial.writeValue("x", x)
         let highBit: number
         let lowBit: number
-        highBit = x & 0xF0
+        highBit = (x & 0xF0) >> 4
         lowBit = x & 0x0F
+        let charIndex = c.charCodeAt(0)
+        //serial.writeValue("highBit", highBit)
+        //serial.writeValue("lowBit", lowBit)
+        //serial.writeLine("")
 
         command(SSD1306_SETSTARTLINE)
         command((0x10 | highBit)) // send Columnaddress 4 higher bits
         command(lowBit)           // send Columnaddress 4 lower bits
         command(SSD1306_SETPAGEADRESS + y)  // send Pageadress
 
-        let line = pins.createBuffer(2)
+        let line = pins.createBuffer(7)
         line[0] = 0x40
-        for (let i = 0; i < 6; i++) {
-            if (i === 5) {
-                line[1] = 0x00
-            }
-            else {
-                let charIndex = c.charCodeAt(0)
-                let charNumber = font.getNumber(NumberFormat.UInt8BE, 5 * charIndex + i)
-                line[1] = charNumber
-            }
-            pins.i2cWriteBuffer(chipAdress, line, false)
+
+        for (let i = 1; i < 6; i++) {
+            let charNumber = font.getNumber(NumberFormat.UInt8BE, 5 * charIndex + i - 1)
+            //serial.writeValue("charNumber", charNumber)
+            line[i] = charNumber
         }
+        line[6] = 0x00
+        pins.i2cWriteBuffer(chipAdress, line, false)
+
     }
-
-
 
     export function init() {
         command(SSD1306_DISPLAYOFF);
