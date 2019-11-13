@@ -60,7 +60,7 @@ namespace OLED {
 
     export function writeString(str: string) {
         for (let i = 0; i < str.length(); i++) {
-            if (charX > (displayWidth - 6) {
+            if (charX > displayWidth - 6) {
                 newLine()
             }
             drawChar(charX, charY, str.charAt(i))
