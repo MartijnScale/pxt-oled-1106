@@ -26,8 +26,8 @@ namespace OLED {
     const yOffset = 0
     let charX = 0
     let charY = 0
-    let displayWidth = 128
-    let displayHeight = 64 / 8
+    const displayWidth = 128
+    const displayHeight = 64 / 8
 
     function command(cmd: number) {
         let buf = pins.createBuffer(2)
@@ -65,7 +65,7 @@ namespace OLED {
 
     export function writeString(str: string) {
         for (let i = 0; i < str.length(); i++) {
-            if (charX > displayWidth - 6) {
+            if (charX > (displayWidth - 6)) {
                 newLine()
             }
             drawChar(charX, charY, str.charAt(i))
@@ -94,7 +94,6 @@ namespace OLED {
     }
 
     function drawChar(x: number, y: number, c: string) {
-        //serial.writeValue("x", x)
         let highBit: number
         let lowBit: number
         highBit = (x & 0xF0) >> 4
