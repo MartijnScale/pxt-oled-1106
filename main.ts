@@ -1,26 +1,26 @@
 namespace OLED {
     let font: Buffer;
 
-    const SSD1306_SETCONTRAST = 0x81
-    const SSD1306_SETPAGEADRESS = 0xB0
-    const SSD1306_DISPLAYALLON_RESUME = 0xA4
-    const SSD1306_DISPLAYALLON = 0xA5
-    const SSD1306_NORMALDISPLAY = 0xA6
-    const SSD1306_DISPLAYOFF = 0xAE
-    const SSD1306_DISPLAYON = 0xAF
-    const SSD1306_SETDISPLAYOFFSET = 0xD3
-    const SSD1306_SETCOMPINS = 0xDA
-    const SSD1306_SETVCOMDETECT = 0xDB
-    const SSD1306_SETDISPLAYCLOCKDIV = 0xD5
-    const SSD1306_SETPRECHARGE = 0xD9
-    const SSD1306_SETMULTIPLEX = 0xA8
-    const SSD1306_SETLOWCOLUMN = 0x02
-    const SSD1306_SETHIGHCOLUMN = 0x10
-    const SSD1306_SETSTARTLINE = 0x40
-    const SSD1306_COMSCANINC = 0xC0
-    const SSD1306_COMSCANDEC = 0xC8
-    const SSD1306_SEGREMAP = 0xA1
-    const SSD1306_CHARGEPUMP = 0x8D
+    const SSD1106_SETCONTRAST = 0x81
+    const SSD1106_SETPAGEADRESS = 0xB0
+    const SSD1106_DISPLAYALLON_RESUME = 0xA4
+    const SSD1106_DISPLAYALLON = 0xA5
+    const SSD1106_NORMALDISPLAY = 0xA6
+    const SSD1106_DISPLAYOFF = 0xAE
+    const SSD1106_DISPLAYON = 0xAF
+    const SSD1106_SETDISPLAYOFFSET = 0xD3
+    const SSD1106_SETCOMPINS = 0xDA
+    const SSD1106_SETVCOMDETECT = 0xDB
+    const SSD1106_SETDISPLAYCLOCKDIV = 0xD5
+    const SSD1106_SETPRECHARGE = 0xD9
+    const SSD1106_SETMULTIPLEX = 0xA8
+    const SSD1106_SETLOWCOLUMN = 0x02
+    const SSD1106_SETHIGHCOLUMN = 0x10
+    const SSD1106_SETSTARTLINE = 0x40
+    const SSD1106_COMSCANINC = 0xC0
+    const SSD1106_COMSCANDEC = 0xC8
+    const SSD1106_SEGREMAP = 0xA1
+    const SSD1106_CHARGEPUMP = 0x8D
     const chipAdress = 0x3C
     const xOffset = 2
     const yOffset = 0
@@ -37,12 +37,14 @@ namespace OLED {
     }
 
     export function clear() {
-        command(SSD1306_SETSTARTLINE)
-        command(SSD1306_SETHIGHCOLUMN)
-        command(SSD1306_SETLOWCOLUMN)
+        //command(SSD1106_SETSTARTLINE)
+        //command(SSD1106_SETHIGHCOLUMN)
+        //command(SSD1106_SETLOWCOLUMN)
         for (let pagenumber = 0; pagenumber < 8; pagenumber++) {
-            command(SSD1306_SETPAGEADRESS + pagenumber)
-
+            command(SSD1106_SETSTARTLINE)
+            command(SSD1106_SETHIGHCOLUMN)
+            command(SSD1106_SETLOWCOLUMN)
+            command(SSD1106_SETPAGEADRESS + pagenumber)
             //write 16 chunks of 0x40 and then 8 bytes of 0x00
             // for (let counter = 0; counter < 16; counter++) {            // exit should be counter < 16
             let data = pins.createBuffer(9);
@@ -55,7 +57,7 @@ namespace OLED {
             }
             // }
         }
-        command(SSD1306_DISPLAYON)
+        command(SSD1106_DISPLAYON)
 
         charX = xOffset
         charY = yOffset
@@ -69,6 +71,21 @@ namespace OLED {
             drawChar(charX, charY, str.charAt(i))
             charX += 6
         }
+    }
+
+    export function writeNum(n: number) {
+        let numString = n.toString()
+        writeString(numString)
+    }
+
+    export function writeStringNewLine(str: string) {
+        writeString(str)
+        newLine()
+    }
+
+    export function writeNumNewLine(n: number) {
+        writeNum(n)
+        newLine()
     }
 
     export function newLine() {
@@ -87,10 +104,10 @@ namespace OLED {
         //serial.writeValue("lowBit", lowBit)
         //serial.writeLine("")
 
-        command(SSD1306_SETSTARTLINE)
+        command(SSD1106_SETSTARTLINE)
         command((0x10 | highBit)) // send Columnaddress 4 higher bits
         command(lowBit)           // send Columnaddress 4 lower bits
-        command(SSD1306_SETPAGEADRESS + y)  // send Pageadress
+        command(SSD1106_SETPAGEADRESS + y)  // send Pageadress
 
         let line = pins.createBuffer(7)
         line[0] = 0x40
@@ -106,23 +123,23 @@ namespace OLED {
     }
 
     export function init() {
-        command(SSD1306_DISPLAYOFF);
-        command(SSD1306_SETDISPLAYCLOCKDIV);
+        command(SSD1106_DISPLAYOFF);
+        command(SSD1106_SETDISPLAYCLOCKDIV);
         command(0x80);                                  // the suggested ratio 0x80
-        command(SSD1306_SETMULTIPLEX);
+        command(SSD1106_SETMULTIPLEX);
         command(0x3F);
-        command(SSD1306_SETDISPLAYOFFSET);
+        command(SSD1106_SETDISPLAYOFFSET);
         command(0x00);
-        command(SSD1306_SEGREMAP);
-        command(SSD1306_COMSCANDEC);
-        command(SSD1306_SETCOMPINS);
+        command(SSD1106_SEGREMAP);
+        command(SSD1106_COMSCANDEC);
+        command(SSD1106_SETCOMPINS);
         command(0x12);
-        command(SSD1306_SETCONTRAST);
+        command(SSD1106_SETCONTRAST);
         command(0xCF);
-        command(SSD1306_SETPRECHARGE);
+        command(SSD1106_SETPRECHARGE);
         command(0xF1);
-        command(SSD1306_DISPLAYALLON_RESUME);
-        command(SSD1306_NORMALDISPLAY);
+        command(SSD1106_DISPLAYALLON_RESUME);
+        command(SSD1106_NORMALDISPLAY);
         font = hex`
     0000000000
     3E5B4F5B3E
