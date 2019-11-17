@@ -82,6 +82,7 @@ namespace OLED_1106 {
         writeString(numString)
     }
 
+    //% block="Write string with Carriage Rerturn"
     export function writeStringNewLine(str: string) {
         writeString(str)
         newLine()
