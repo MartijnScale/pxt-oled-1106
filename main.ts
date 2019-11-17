@@ -89,7 +89,7 @@ namespace OLED_1106 {
         newLine()
     }
 
-    //% block="Write number with Carriage Return"
+    //% block="Write number with Carriage Return %n|number"
     export function writeNumNewLine(n: number) {
         writeNum(n)
         newLine()
