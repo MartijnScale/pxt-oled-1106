@@ -1,4 +1,4 @@
-namespace OLED {
+namespace OLED_1106 {
     let font: Buffer;
 
     const SSD1106_SETCONTRAST = 0x81
