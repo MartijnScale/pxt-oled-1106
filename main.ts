@@ -37,6 +37,7 @@ namespace OLED_1106 {
         pins.i2cWriteBuffer(chipAdress, buf, false)
     }
 
+    //% block="Clear Display"
     export function clear() {
         //command(SSD1106_SETSTARTLINE)
         //command(SSD1106_SETHIGHCOLUMN)
