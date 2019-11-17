@@ -77,7 +77,7 @@ namespace OLED_1106 {
         }
     }
 
-    //% block="Write number"
+    //% block="Write number %n|number"
     export function writeNum(n: number) {
         let numString = n.toString()
         writeString(numString)
