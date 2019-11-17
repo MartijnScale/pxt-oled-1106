@@ -87,7 +87,8 @@ namespace OLED_1106 {
         writeString(str)
         newLine()
     }
-    
+
+    //% block="Write number with Carriage Return"
     export function writeNumNewLine(n: number) {
         writeNum(n)
         newLine()
