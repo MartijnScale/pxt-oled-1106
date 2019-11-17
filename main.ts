@@ -94,6 +94,7 @@ namespace OLED_1106 {
         newLine()
     }
 
+    //% block="Write Carriage Return"
     export function newLine() {
         charY++
         charX = xOffset
@@ -127,6 +128,7 @@ namespace OLED_1106 {
 
     }
 
+    //% block="Init display"
     export function init() {
         command(SSD1106_DISPLAYOFF);
         command(SSD1106_SETDISPLAYCLOCKDIV);
