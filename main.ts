@@ -65,6 +65,7 @@ namespace OLED_1106 {
         charY = yOffset
     }
 
+    //% block="Write string"
     export function writeString(str: string) {
         for (let i = 0; i < str.length(); i++) {
             if (charX > (displayWidth - 6)) {
@@ -75,6 +76,7 @@ namespace OLED_1106 {
         }
     }
 
+    //% block="Write number"
     export function writeNum(n: number) {
         let numString = n.toString()
         writeString(numString)
