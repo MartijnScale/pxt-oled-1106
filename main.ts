@@ -82,12 +82,12 @@ namespace OLED_1106 {
         writeString(numString)
     }
 
-    //% block="Write string with Carriage Rerturn"
+    //% block="Write string with Carriage Return"
     export function writeStringNewLine(str: string) {
         writeString(str)
         newLine()
     }
-
+    
     export function writeNumNewLine(n: number) {
         writeNum(n)
         newLine()
