@@ -1,4 +1,5 @@
 //% color=190 weight=100 icon="\f55d" block="OLED_1106 Blocks"
+
 namespace OLED_1106 {
     let font: Buffer;
 
@@ -65,7 +66,7 @@ namespace OLED_1106 {
         charY = yOffset
     }
 
-    //% block="Write string"
+    //% block="Write string %str|string"
     export function writeString(str: string) {
         for (let i = 0; i < str.length(); i++) {
             if (charX > (displayWidth - 6)) {
