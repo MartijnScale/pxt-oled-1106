@@ -1,5 +1,4 @@
-# pxt-oled-1106
-
+# Extension for micro:bit to support OLED-1106 display
 
 
 ## TODO
