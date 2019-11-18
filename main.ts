@@ -77,19 +77,19 @@ namespace OLED_1106 {
         }
     }
 
-    //% block="Write number %n|number"
+    //% block="Write number %n"
     export function writeNum(n: number) {
         let numString = n.toString()
         writeString(numString)
     }
 
-    //% block="Write string with Carriage Return %str|string"
+    //% block="Write string with Carriage Return %str"
     export function writeStringNewLine(str: string) {
         writeString(str)
         newLine()
     }
 
-    //% block="Write number with Carriage Return %n|number"
+    //% block="Write number with Carriage Return %n"
     export function writeNumNewLine(n: number) {
         writeNum(n)
         newLine()
