@@ -1,13 +1,13 @@
-## Extension for micro:bit to support OLED-1106 display
+# Extension for micro:bit to support OLED-1106 display
 
 This micro:bit extension is developed to provide better support for OLED 128x64 Displays with the SH-1106 controller.
 It is based on the available SH-1306 OLED extensions that were already available for the micro:bit
 
-# Hardware
+## Hardware
 
 Connect the OLED Display to the I2C, the 3V and GND pins of the micro:bit, preferrably using a Breakout Board.
 
-# Usage
+## Usage
 
 This extension can be used with Blocks and JavaScript, the explanation below is the same for both:
 
