@@ -1,4 +1,4 @@
-//% color=190 weight=100 icon="\uf27a" block="OLED_1106 Blocks"
+//% color=190 weight=100 icon="\uf27a" block="OLED_1106"
 
 namespace OLED_1106 {
     let font: Buffer;
